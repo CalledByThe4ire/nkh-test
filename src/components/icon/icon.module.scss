@@ -1,0 +1,13 @@
+.Icon {
+  display: flex;
+  transition: all 0.3s ease-in-out;
+
+  &Shevron {
+    margin-left: auto;
+    transition: inherit;
+  }
+
+  &Rotated {
+    transform: rotate(90deg);
+  }
+}

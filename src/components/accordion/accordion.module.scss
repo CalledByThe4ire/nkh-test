@@ -1,0 +1,49 @@
+.Accordion {
+  display: flex;
+  flex-flow: column wrap;
+
+  &Toggler {
+    display: flex;
+    align-items: center;
+    padding: 16px;
+    color: black;
+    cursor: pointer;
+    background-color: lightgray;
+    border: none;
+    outline: none;
+    transition: background-color 0.3s ease-in-out;
+
+    &:hover,
+    &Active {
+      color: white;
+      background-color: black;
+
+      svg {
+        path {
+          fill: white;
+        }
+      }
+    }
+  }
+
+  &Title {
+    padding: 0;
+    margin: 0;
+    font-family: 'Open Sans', Arial, sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+  &Inner {
+    overflow: hidden;
+    background-color: white;
+    transition: max-height 0.3s ease-in-out;
+  }
+
+  &Content {
+    padding: 18px;
+    font-family: 'Open Sans', Arial, sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+  }
+}

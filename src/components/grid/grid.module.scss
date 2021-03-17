@@ -1,0 +1,171 @@
+@import '../../styles/mixins';
+
+@mixin comment() {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: inline-flex;
+  padding: 4px;
+  font-size: small;
+  color: white;
+  background-color: black;
+}
+
+.Grid {
+  $grid: &;
+  $cols: 4;
+  $offset: 8px;
+  $colors: darkslateblue mediumorchid seagreen steelblue;
+
+  width: 100%;
+  min-height: 200px;
+
+  &Row {
+    border: 1px solid black;
+
+    &:not(:last-child) {
+      margin-bottom: $offset;
+    }
+  }
+
+  &Col {
+    height: 100px;
+    color: white;
+
+    &:not(:last-child) {
+      margin-right: $offset;
+    }
+
+    @for $i from 1 through length($colors) {
+      $color: nth($colors, $i);
+
+      &:nth-child(#{$i}) {
+        background-color: $color;
+      }
+    }
+  }
+
+  &Table {
+    display: table;
+    border-spacing: $offset;
+    border-collapse: separate;
+
+    #{$grid}Row {
+      display: table-row;
+    }
+
+    #{$grid}Col {
+      display: table-cell;
+      text-align: center;
+      vertical-align: middle;
+    }
+  }
+
+  &Float {
+    width: 100%;
+
+    #{$grid}Row::before,
+    #{$grid}Row::after {
+      display: table;
+      clear: both;
+      content: ' ';
+    }
+
+    #{$grid}Col {
+      float: left;
+      width: calc((100% / #{$cols}) - #{$offset});
+      line-height: 100px;
+      text-align: center;
+
+      &:first-child {
+        width: 100% / $cols;
+      }
+    }
+  }
+
+  &InlineBlock {
+    display: inline-block;
+    vertical-align: middle;
+
+    #{$grid}Row {
+      width: 100%;
+    }
+
+    #{$grid}Col {
+      display: inline-block;
+      width: calc((100% / #{$cols}) - #{$offset});
+      text-align: center;
+      vertical-align: middle;
+
+      &::before {
+        display: inline-block;
+        height: 100%;
+        vertical-align: middle;
+        content: '';
+      }
+
+      &:first-child {
+        width: 100% / $cols;
+      }
+    }
+  }
+
+  &Flex {
+    display: flex;
+    flex-flow: row wrap;
+
+    #{$grid}Row {
+      position: relative;
+      display: flex;
+      flex-flow: row-reverse wrap;
+      justify-content: space-between;
+      width: inherit;
+
+      &::before {
+        @include comment();
+      }
+
+      &:first-child {
+        justify-content: flex-end;
+
+        > div:first-child {
+          position: relative;
+          align-self: flex-end;
+
+          &::before {
+            @include comment();
+
+            content: 'align-self: flex-end';
+          }
+        }
+
+        &::before {
+          content: 'justify-content: flex-end';
+        }
+      }
+
+      &:last-child {
+        &::before {
+          content: 'justify-content: space-between';
+        }
+      }
+    }
+
+    #{$grid}Col {
+      display: flex;
+      flex: 0 0 auto;
+      align-items: center;
+      justify-content: center;
+      width: calc((75% / #{$cols}) - #{$offset});
+      height: 75px;
+
+      &:not(:first-child) {
+        margin-right: $offset;
+      }
+
+      &:last-child {
+        width: 75% / $cols;
+      }
+    }
+  }
+}
